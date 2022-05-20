@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="inherit_report_mrporder" inherit_id="mrp.report_mrporder">
+		<xpath expr="//table[@t-if='o.move_raw_ids']" position="replace">
+			<table class="table table-sm" t-if="o.move_raw_ids">
+				<thead>
+					<tr>
+						<th>Product</th>
+						<th>To Consume</th>
+						<th>Consumed</th>
+						<th>Diff</th>
+					</tr>
+				</thead>
+				<tbody>
+					<t t-if="o.move_raw_ids">
+						<tr t-foreach="o.calculate_report_data()" t-as="l">
+							<td>
+								<span t-esc="l['product_name']"/>
+							</td>
+							<td>
+								<span t-esc="l['move_actual_qty']"/>
+								<span t-esc="l['product_uom']" groups="uom.group_uom"/>
+							</td>
+							<td>
+								<span t-esc="l['quantity_done']"/>
+								<span t-esc="l['product_uom']" groups="uom.group_uom"/>
+							</td>
+							<td>
+								<span t-esc="(l['quantity_done'] - l['move_actual_qty'])"/>
+								
+							</td>
+						</tr>
+					</t>
+				</tbody>
+			</table>
+		</xpath>
+	</template>
+
+</odoo>
